@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: db-service
+          uri: lb://db-service
+          predicates:
+            - Path=/rest/db/**
+        - id: stock-service
+          uri: lb://stock-service
+          predicates:
+            - Path=/rest/stock/**
+
+server:
+  port: 8304
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://localhost:8301/eureka
+  instance:
+    hostname: localhost
